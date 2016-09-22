@@ -86,6 +86,31 @@ public class ClockView extends View {
         clockRingPaint.setShadowLayer(4, 2, 2, 0x80000000);
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        //super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int width=MeasureSpec.getSize(widthMeasureSpec);
+        clockSize=dp2px(CLOCK_MIN_SIZE);
+        if(clockSize>width){
+            width=clockSize;
+        }else{
+            clockSize=width;
+        }
+        setMeasuredDimension(width,width);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        if(w!=oldw||h!=oldh){
+            clockSize=w;
+        }
+        int minSize=dp2px(CLOCK_MIN_SIZE);
+        if(clockSize<minSize){
+            clockSize=minSize;
+        }
+    }
+
     /**
      * 将 dp 转换为 px
      *
